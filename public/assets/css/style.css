@@ -1,0 +1,30 @@
+.contenedor_principal{
+    height: 850px;
+    background: linear-gradient(0deg, rgba(116,116,119,1) 0%, rgba(65,65,97,1) 49%, rgb(6, 4, 37) 100%);
+}
+
+.profile_img{
+    border-radius: 50px;
+}
+
+.profile_login_img{
+    border-radius: 100px;
+}
+
+.container_color{
+    background: linear-gradient(180deg, rgba(2,0,36,1) 10%, rgba(35,35,80,1) 49%, rgb(4, 11, 84) 100%);;
+}
+
+.line_white{
+    color:white;
+    margin-top: 30px;
+}
+
+.sangria{
+    text-indent: 30px;
+    text-align: justify;
+}
+
+ul li {
+    list-style: none;
+}

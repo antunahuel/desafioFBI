@@ -1,0 +1,63 @@
+<div class="contenedor_principal">
+    {{>title}}
+    
+    <main class="container">
+        <hr class="line_white">
+        <section>
+          <form class="text-light text-center border rounded p-3 border-light" id="ingreso">
+            <div class="row w-75 mx-auto">
+                <div class="col-12">
+                    <img class="profile_login_img" src="../assets/img/img_login.jpg" alt="profile_user" width="120">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="mail" class="form-control" name="email" id="email" required>
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
+                </div>
+                <div class="col-12 mt-3">
+                    <input class="btn btn-warning" type="submit" value="INGRESAR">
+                </div>
+            </div>
+           
+          </form>
+        </section>
+    </main>
+</div>
+
+<script>
+    let formIngreso = document.getElementById("ingreso");
+
+    formIngreso.addEventListener("submit", async(event)=>{
+        
+        try{
+            event.preventDefault();
+
+            let formdata = new FormData(formIngreso);
+
+            let response = await fetch("/api/v1/fbi/users",{
+                method:'POST',
+                body: formdata
+            })
+            
+            let data = await response.json();
+
+            if(response.status == 200){
+                alert(data.msg);
+
+                //guardar token y usuario
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.user))
+                location.href="/";
+
+            }else{
+                alert(data.msg);
+                localStorage.removeItem("token");
+            }
+        }catch{
+            alert("Error en el proceso de autentificación de datos");
+        }
+    })
+</script>

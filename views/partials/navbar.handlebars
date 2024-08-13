@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+  <div class="container-fluid">
+    <img class="profile_img ms-5" src="../../assets/img/img_default.jpg" alt="usuario_inspector" width="50"><span
+      class="navbar-brand ms-3 fs-2 text-warning" id="title_nav">FBI</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto pe-5">
+        <li class="nav-item">
+          <a class="nav-link text-light" href="/">Home</a>
+        </li>
+        <li class="nav-item" id="profile" style="display: none;">
+          <a class="nav-link text-light" href="/perfil" id="linkPerfil">Perfil</a>
+        </li>
+        <li class="nav-item" id="topsecret" style="display: none;">
+          <a class="nav-link text-light" href="/topSecret" id="linkTopSecret">Top secret</a>
+        </li>
+        <li class="nav-item" id="loginLink">
+          <a class="nav-link text-light" href="/login">Iniciar sesion</a>
+        </li>
+        <li class="nav-item" id="logoutLink" style="display: none;">
+          <a class="nav-link text-light" id="lagout" href="">Cerrar sesión</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const profile = document.getElementById("profile");
+  const topSecret = document.getElementById("topsecret");
+  const loginLink = document.getElementById("loginLink");
+  const logoutLink = document.getElementById("logoutLink");
+
+  let token = localStorage.getItem("token");
+  let user = JSON.parse(localStorage.getItem("user"));
+  {{!-- console.log(user.profile_img); --}}
+
+  if(token){
+    profile.style.display = "block";
+    topSecret.style.display = "block";
+    loginLink.style.display = "none";
+    logoutLink.style.display = "block";
+  };
+
+  if(user){
+    let profileImg = document.querySelector(".profile_img");
+    profileImg.src = `../../assets/img/${user.profile_img}`;
+    let titleNav = document.getElementById("title_nav");
+    titleNav.innerText=user.email;
+  }
+
+  //cerrar sesión
+
+  let lagout = document.getElementById("lagout");
+
+  lagout.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    let confirmar = confirm("Esta seguro de cerrar su sesión");
+
+    if(confirmar){
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      alert("Su sesión ha sido cerrada correctamente");
+        setTimeout(() => {
+        location.href = "/";
+      }, 500);
+    }
+  });
+
+  //accediendo a perfil vista protegida
+  let linkPerfil = document.getElementById("linkPerfil");
+
+  linkPerfil.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    location.href = `/perfil?token=${token}`;
+  });
+
+  //accediendo a top secret ruta protegida
+
+  let linkTopSecret = document.getElementById("linkTopSecret");
+
+  linkTopSecret.addEventListener("click", (event)=>{
+    event.preventDefault();
+
+    location.href = `/topSecret?token=${token}`;    
+    
+  })
+
+
+
+</script>
